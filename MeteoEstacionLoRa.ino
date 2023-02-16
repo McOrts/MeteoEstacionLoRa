@@ -7,6 +7,14 @@
 #include <CayenneLPP.h>//the library is needed https://github.com/ElectronicCats/CayenneLPP
 #include "Arduino.h"
 #include "settings.h"
+#include "DHT.h"
+#include <Wire.h>
+
+#define DHTTYPE DHT22   // DHT 22  (AM2302), AM2321
+DHT dht(DHTPIN, DHTTYPE); // Initialize DHT sensor.
+
+float humidity;
+float temperature;
 
 int loops; // number of readings
 float cycles; // number of read and transmisions cycles.
@@ -56,9 +64,11 @@ void flow () // Interrupt function
 void setup() {
 	Serial.begin(115200);
 
+  Serial.println(F("DHTxx test!"));
+  dht.begin();
+
   tmp_ini = millis(); 
 
-  
   loops = 0;
   cycles = 50;
   icycles = 1;
@@ -114,6 +124,9 @@ void transmitRecord()
    
   // Cayenne
   lpp.reset();
+  lpp.addVoltage(1, getBatteryVoltage());
+  lpp.addTemperature(1, temperature);
+  lpp.addRelativeHumidity(1, humidity);
   lpp.addDigitalInput(1,TurnsPulses); 
   lpp.addAnalogInput(1,SensorId);
   lpp.addAnalogInput(2,cycles);
@@ -141,6 +154,17 @@ void loop()
   long now_DutyCycle = millis();
   if (now_DutyCycle - CountStart > DutyCycle) {
     CountStart = now_DutyCycle;
+
+    humidity = dht.readHumidity();
+    temperature = dht.readTemperature();
+    if (isnan(humidity) || isnan(temperature)) {
+      Serial.println(F("Failed to read from DHT sensor!"));
+    }
+    Serial.print(F("Humidity: "));
+    Serial.print(humidity);
+    Serial.print(F("%  Temperature: "));
+    Serial.print(temperature);
+    Serial.print(F("°C "));
 
     // wind calculations
     Serial.print("Number of turns: ");
