@@ -16,7 +16,6 @@ DHT dht(DHTPIN, DHTTYPE); // Initialize DHT sensor.
 float humidity;
 float temperature;
 
-int loops; // number of readings
 float cycles; // number of read and transmisions cycles.
 float icycles; // delta for cycles counter.
 
@@ -69,7 +68,6 @@ void setup() {
 
   tmp_ini = millis(); 
 
-  loops = 0;
   cycles = 50;
   icycles = 1;
 
@@ -124,12 +122,13 @@ void transmitRecord()
    
   // Cayenne
   lpp.reset();
-  lpp.addVoltage(1, getBatteryVoltage());
+  //lpp.addVoltage(1, );
   lpp.addTemperature(1, temperature);
   lpp.addRelativeHumidity(1, humidity);
   lpp.addDigitalInput(1,TurnsPulses); 
-  lpp.addAnalogInput(1,SensorId);
-  lpp.addAnalogInput(2,cycles);
+  lpp.addAnalogInput(1,getBatteryVoltage());
+  lpp.addAnalogInput(2,SensorId);
+  lpp.addAnalogInput(3,cycles);
   lpp.addGPS(2, latitude, longitude, alt);
 
   Serial.println("Transmiting...");
@@ -142,6 +141,7 @@ void transmitRecord()
   
   // if (LoRaWAN.send(1, lpp.getBuffer(), lpp.getSize(), requestack)) {
   if (LoRaWAN.send(lpp.getSize(), lpp.getBuffer(), 2, requestack)) {
+    TurnsPulses = 0; // Reset Counter
     Serial.println("Send OK");
   } else {
     Serial.println("Send FAILED");
@@ -160,6 +160,8 @@ void loop()
     if (isnan(humidity) || isnan(temperature)) {
       Serial.println(F("Failed to read from DHT sensor!"));
     }
+    Serial.print("Battery V: ");
+    Serial.println(getBatteryVoltage());
     Serial.print(F("Humidity: "));
     Serial.print(humidity);
     Serial.print(F("%  Temperature: "));
@@ -172,11 +174,6 @@ void loop()
 
     transmitRecord();
 
-    TurnsPulses = 0; // Reset Counter
-    Serial.println ('Send');
-
-    loops = 0;
-  
   }
   
 }
