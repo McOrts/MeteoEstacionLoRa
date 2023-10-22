@@ -1,4 +1,4 @@
-# Estacioón meteorológica LoRaWAN
+# Estación meteorológica autónoma LoRaWAN
 Estación metereológica DIY con comunicaciones LoRaWAN utilizando la red TTN Community.
 
 ## Montaje
