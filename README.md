@@ -33,13 +33,16 @@ Podremos encontrar toda la documentación de esta placa en: [Documentos y ficher
 
 <img src="./img/WH-SP-WS01.jpg" width="300" align="center" />
 
+- Sensor de temperatura y humedad DHT22 (3-Pin).
+  - [via Aliexpress](https://www.aliexpress.com/wholesale?catId=0&initiative_id=SB_20220806101441&SearchText=dht22)
+ 
+<img src="./img/DHT22.png" width="300" align="center" />
+
 - [Carcasa hermética IP66](https://es.aliexpress.com/item/33060319519.html)
 
 <img src="./img/IP66_case.png" width="400" align="center" />
 
-Por otra parte también se necesitarán otros componentes no electrónicos como cables, mini-protoboard... lo que conforma este kit:
-
-<img src="./img/jaleometro_kit.jpg" align="center" />
+Por otra parte también se necesitarán otros componentes no electrónicos como cables, mini-protoboard...
 
 ## Conexionado
 
