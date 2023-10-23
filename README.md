@@ -54,10 +54,6 @@ Por otra parte también se necesitarán otros componentes no electrónicos como 
 <img src="./img/IMG_5078.png" width="400" align="center" />
 <img src="./img/IMG_5080.png" width="400" align="center" />
 <img src="./img/IMG_5082.png" width="400" align="center" />
-<img src="./img/.png" width="400" align="center" />
-<img src="./img/.png" width="400" align="center" />
-<img src="./img/.png" width="400" align="center" />
-
 
 ## Programación y configuración
 ### Configuración IDE Arduino
